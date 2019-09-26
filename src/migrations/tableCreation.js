@@ -1,24 +1,10 @@
 var express = require('express');
-var mysql = require('mysql');
 var app = express();
+const dbConnection = require('./DBConnectionDetails');
 
-//Connection Properties
-var dbconnection = mysql.createConnection({
-	//properties
-	host: 'localhost',
-	user: 'root',
-	password: 'verstappen',
-	database: 'phpsrep'
-});
-
-//Database Connection
-dbconnection.connect((error) => {
-	if (error) {
-		console.log('Error: ' + error.message);
-	} else {
-		console.log('Successfully Connected!!');
-	}
-});
+//Database connection
+dbConnection.dbConnect();
+var dbconnection = dbConnection.details();
 
 //Main Page
 app.get('/', (req, res) => {
@@ -42,7 +28,6 @@ app.get('/create/:createid', (req, res) => {
 	//Routing Parameter /
 	let tableToCreate = req.params.createid;
 	let selectedQuery = '';
-	console.log('create run');
 	if (tableToCreate == 'products') {
 		selectedQuery = `CREATE TABLE IF NOT EXISTS products(product_id INT PRIMARY KEY AUTO_INCREMENT,
                                 name VARCHAR(255) NOT NULL,
