@@ -27,11 +27,11 @@ app.get('/create-table/:createid', (req, res) => {
   //Routing Parameter /
   let tableToCreate = req.params.createid;
   if (tableToCreate == 'products') {
-    createTable.createProductTable();
+    createTable.createProductTable(database);
   } else if (tableToCreate == 'stock') {
-    createTable.createStockTable();
+    createTable.createStockTable(database);
   } else if (tableToCreate == 'transactions') {
-    createTable.createTransactionsTable();
+    createTable.createTransactionsTable(database);
   }else{
     console.log('Cannot make that table')
   }
