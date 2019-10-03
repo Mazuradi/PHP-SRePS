@@ -1,9 +1,8 @@
-var mysql = require('mysql');
-const dbConnection = require('../migrations/DBConnectionDetails');
+const databaseConnection = require('../migrations/DBConnectionDetails');
 
 //Database connection
-dbConnection.dbConnect();
-var dbconnection = dbConnection.details();
+const database = databaseConnection();
+
 
 //VARIATION 1 - JSON STYLE.
 /*let product = {
@@ -14,13 +13,13 @@ var dbconnection = dbConnection.details();
 		//Connect to DB and run queries.
 		let checkQuery = `SELECT COUNT(*) FROM products WHERE name=${this.name} AND retail_price=${this.retail_px}
                           AND wholesale_price=${this.wholesale_px}`;
-		dbconnection.query(checkQuery, (err, results, fields) => {
+		database.query(checkQuery, (err, results, fields) => {
 			if (err) {
 				console.log(err.message);
 			} else if (results == 0) {
 				let insertQuery = `INSERT INTO products(name, wholesale_price, retail_price)
                                VALUES(${this.name}, ${this.wholesale_px}, ${this.retail_px})`;
-				dbconnection.query(insertQuery, (err, results, fields) => {
+				database.query(insertQuery, (err, results, fields) => {
 					if (err) {
 						console.log(err.message);
 					} else {
@@ -42,13 +41,13 @@ function Product(name, wholesale, retail) {
 	this.insertProduct = function() {
 		let checkQuery = `SELECT COUNT(*) AS count FROM products WHERE name='${this.name}' 
                       AND retail_price=${this.retailpx} AND wholesale_price=${this.wholesalepx}`;
-		dbconnection.query(checkQuery, (err, results, fields) => {
+		database.query(checkQuery, (err, results, fields) => {
 			if (err) {
 				console.log(err.message);
 			} else if (results[0].count == 0) {
 				let insertQuery = `INSERT INTO products(name, wholesale_price, retail_price)
                            VALUES('${this.name}', ${this.wholesalepx}, ${this.retailpx})`;
-				dbconnection.query(insertQuery, (err, results, fields) => {
+				database.query(insertQuery, (err, results, fields) => {
 					if (err) {
 						console.log(err.message);
 					} else {

@@ -1,33 +1,20 @@
-var mysql = require('mysql');
-
-//--------CHANGE CONSTANTS!!!-------//
-//Your DB host location
-const DB_HOST = 'localhost';
-//Your DB username
-const DB_USER = 'developertest';
-//Your DB password
-const DB_PSWD = 'albon';
-//Your DB database name
-const DB_DATABASE = 'phpsrep';
-//---------------------------------//
+const mysql = require('mysql');
+const dbConfig = require('./dbconfig');
 
 //Connection Properties + Creating the connection - NO NEED TO TOUCH
-var details = () => {
-	var dbconnection = mysql.createConnection({
-		//properties
-		host: DB_HOST,
-		user: DB_USER,
-		password: DB_PSWD,
-		database: DB_DATABASE
-	});
-
-	return dbconnection;
+const createDatabase = () => {
+	return mysql.createConnection(dbConfig);
 };
-var dbConnect = () => {
-	//Database Connection
-	var dbconnection = details();
 
-	dbconnection.connect((error) => {
+const connectDatabase = (hostName, databaseUsername, databasePassword, databaseName) => {
+	//Database Connection
+	const database = createDatabase(
+		hostName,
+		databaseUsername,
+		databasePassword,
+		databaseName);
+
+	database.connect((error) => {
 		if (error) {
 			console.log('Error: ' + error.message);
 		} else {
@@ -35,7 +22,7 @@ var dbConnect = () => {
 		}
 	});
 
-	return dbconnection;
+	return database;
 };
 
-module.exports = { dbConnect, details };
+module.exports =  connectDatabase ;
