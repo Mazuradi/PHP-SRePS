@@ -1,18 +1,9 @@
 const mysql = require('mysql');
-const dbConfig = require('./dbconfig');
-
-//Connection Properties + Creating the connection - NO NEED TO TOUCH
-const createDatabase = () => {
-	return mysql.createConnection(dbConfig);
-};
+const configDetails = require('./dbconfig');
 
 const connectDatabase = (hostName, databaseUsername, databasePassword, databaseName) => {
 	//Database Connection
-	const database = createDatabase(
-		hostName,
-		databaseUsername,
-		databasePassword,
-		databaseName);
+	const database = mysql.createConnection(configDetails);
 
 	database.connect((error) => {
 		if (error) {
