@@ -1,3 +1,4 @@
 import React from "react"
+import { Homepage } from "../components/homepage";
 
-export default () => <div>This feels like a HD Web APP</div>
+export default () => (<Homepage/>);
