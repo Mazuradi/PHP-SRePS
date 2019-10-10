@@ -76,6 +76,7 @@ function updateStock(stockId, newQuantity) {
 	});
 }
 
+//not sure if we actually need this function??
 function getAllStockRecordIds() {
 	var stockIds = [];
 
