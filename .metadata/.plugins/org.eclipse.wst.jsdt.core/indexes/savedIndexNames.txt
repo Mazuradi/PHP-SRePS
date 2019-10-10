@@ -1,3 +1,0 @@
-INDEX VERSION 1.4+C:\Users\Ramuna Sadauskas\Documents\GitHub\PHP-SRePS\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-1209880354.index
-2101765745.index
