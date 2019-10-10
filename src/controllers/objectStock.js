@@ -2,8 +2,6 @@ const databaseConnection = require('../migrations/DBConnectionDetails');
 //Database connection
 const database = databaseConnection();
 
-var util = require('util');
-
 tests();
 
 function tests() {
@@ -53,27 +51,6 @@ function Stock(product_id, quantity, expiration_date) {
 			}
 		});
 	}
-
-	/*this.getStockValues = function() {
-		database.query(checkStockExistsQuery, (err, results, fields) => {
-			if (err) {
-				console.log(err.message);
-			}
-			else if (results[0].count == 0) {
-				console.log('Stock does not exist!');
-			}
-			else {
-				database.query(updatStockQuantity, (err, results, fields) => {
-					if (err) {
-						console.log(err.message);
-					}
-					else {
-						console.log('Stock quantity successfully updated');
-					}
-				});
-			}
-		});
-	}*/
 }
 
 function updateStock(stockId, newQuantity) {
