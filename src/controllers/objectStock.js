@@ -101,7 +101,7 @@ function getAllStockRecordIds() {
 
 
 /**
- * @return Return array of objects with properties: id, productId, quantity, expirationDate
+ * @return Array of objects with properties: id, productId, quantity, expirationDate
  * 
  */
 function getStockData() {
