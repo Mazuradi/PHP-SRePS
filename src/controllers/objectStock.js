@@ -16,7 +16,7 @@ function tests() {
 
 	//TEST GET STOCK DATA
 	getStockData(function(stockData) {
-		console.log('stock data: ' + JSON.stringify(stockData));
+		console.log('stock data: ', JSON.stringify(stockData));
 
 		//code to do stuff with stockData goes here
 	});
@@ -91,6 +91,10 @@ function updateStock(stockId, newQuantity) {
 	});
 }
 
+/**
+ * @return Array of objects with properties: id, productId, quantity, expirationDate
+ * 
+ */
 function getStockData(callback) {
 	//get all stock  data
 	let query = `SELECT * FROM stock`;
