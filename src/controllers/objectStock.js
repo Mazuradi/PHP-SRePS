@@ -1,5 +1,5 @@
-const databaseConnection = require('../migrations/DBConnectionDetails');
 //Database connection
+const databaseConnection = require('../migrations/DBConnectionDetails');
 const database = databaseConnection();
 
 var util = require('util');
@@ -12,11 +12,14 @@ function tests() {
 	stockObj.addStock();
 
 	//TEST UPDATE STOCK
-	//updateStock(1, 50);
+	updateStock(1, 50);
 
 	//TEST GET STOCK DATA
-	/*var stockData = getStockData();
-	console.log('stock data: ' + JSON.stringify(stockData));*/
+	getStockData(function(stockData) {
+		console.log('stock data: ' + JSON.stringify(stockData));
+
+		//code to do stuff with stockData goes here
+	});
 }
 
 function Stock(product_id, quantity, expiration_date) {
@@ -35,6 +38,7 @@ function Stock(product_id, quantity, expiration_date) {
 				console.log('Product does not exist!');
 			}
 			else {
+				//check if stock exists with the same product and expiration date
 				let checkStockExistsQuery = `SELECT COUNT(*) AS count FROM stock 
 										 	 WHERE product_id = '${this.productid}'
 											 AND exp_date = '${this.expirationdate}'`;
@@ -64,6 +68,7 @@ function Stock(product_id, quantity, expiration_date) {
 }
 
 function updateStock(stockId, newQuantity) {
+	//check if stock exists
 	let checkStockExistsQuery = `SELECT COUNT(*) AS count FROM stock WHERE stock_id = '${stockId}'`;
 	database.query(checkStockExistsQuery, (err, results, fields) => {
 		if (err) {
@@ -86,16 +91,11 @@ function updateStock(stockId, newQuantity) {
 	});
 }
 
-/**
- * @return Array of objects with properties: id, productId, quantity, expirationDate
- * 
- */
-function getStockData() {
-	var stockData = [];
-
-	//get all stock record data
+function getStockData(callback) {
+	//get all stock  data
 	let query = `SELECT * FROM stock`;
-	database.query(query, (err, results, fields) => {
+	database.query(query, function(err, results) {
+		var stockData = [];			
 		if (err) {
 			console.log(err.message);
 		}
@@ -106,13 +106,10 @@ function getStockData() {
 								 quantity: 		 results[i].quantity,
 								 expirationDate: results[i].exp_date});
 			}
-			console.log('getStockData() stock data: ' + JSON.stringify(stockData));
 
 			console.log('Successfully retreived stock data');
-
 		}
-	});
-	console.log('getStockData() stock data 2: ' + JSON.stringify(stockData));
 
-	return stockData;
+		return callback(stockData);
+	});
 }
