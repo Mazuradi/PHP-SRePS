@@ -13,8 +13,8 @@ function tests() {
 	//updateStock(1, 50);
 
 	//TEST GET ALL STOCK RECORD IDS
-	/*var allStockRecordIds = getAllStockRecordIds();
-	console.log('stock ids: ' + allStockRecordIds);*/
+	var allStockRecordIds = getAllStockRecordIds();
+	console.log('stock ids: ' + allStockRecordIds);
 
 	//TEST GET STOCK DATA FOR PASSED IN STOCK IDS
 	allStockRecordIds = [123,124,125,126,127,444,445,446];
@@ -90,7 +90,7 @@ function getAllStockRecordIds() {
 			for (var i=0; i<results.length; i++) {
 				stockIds.push(results[i].stock_id);
 			}
-			//console.log('getAllStockRecordIds() stock ids: ' + stockIds);
+			console.log('getAllStockRecordIds() stock ids: ' + stockIds);
 
 			console.log('Successfully retreived all stock ids');
 
