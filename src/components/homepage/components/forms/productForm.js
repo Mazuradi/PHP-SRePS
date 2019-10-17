@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { StyledTextHeading2, StyledTextParagraphMedium } from "../../../styledText";
+import { StyledTextHeading2 } from "../../../styledText";
 
 class FormInput extends React.Component {
   constructor(props) {
@@ -14,13 +14,13 @@ class FormInput extends React.Component {
 
   render() {
     return (
-      <div style={{width: "100%"}}>
-      <InputWrapper
-        name={this.props.name}
-        value={this.value}
-        onChange={this.handleChange}
-        placeholder={this.placeholder}
-      />
+      <div style={{ width: "100%" }}>
+        <InputWrapper
+          name={this.props.name}
+          value={this.value}
+          onChange={this.handleChange}
+          placeholder={this.placeholder}
+        />
       </div>
     );
   }
@@ -30,7 +30,7 @@ class ProductForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        productName: null,
+      productName: null,
       productRetail: null,
       productWholesale: null
     };
@@ -41,12 +41,11 @@ class ProductForm extends React.Component {
 
   handleSubmit(event) {
     const state = this.state;
-    if(state.productRetail && state.productName && state.productWholesale){
-      alert('You created the product: ' + this.state.productName);
+    if (state.productRetail && state.productName && state.productWholesale) {
+      alert("You created the product: " + this.state.productName);
       // const newProd = new Product(state.productName, state.productWholesale, state.productRetail) ;
       // newProd.insertProduct();
-    } else
-      alert('Please use all fields');
+    } else alert("Please use all fields");
   }
 
   handleInputChange(event) {
@@ -78,7 +77,7 @@ class ProductForm extends React.Component {
           />
           <FormInput
             name={"productWholesale"}
-            value={this.state.productWholesale }
+            value={this.state.productWholesale}
             placeholder={"Product Wholesale Price"}
             handleChange={this.handleInputChange}
           />
@@ -104,7 +103,7 @@ const Wrapper = styled.div`
 const InputWrapper = styled.input`
   height: 40px;
   border-radius: 4px;
-  width:100%; 
+  width: 100%;
   margin-bottom: 20px;
   font-size: 36px;
 `;
@@ -131,8 +130,8 @@ const SubmitButton = styled.div`
   &:hover {
     background-color: #ffffff;
   }
-    font-size: 40px;
-    
+  font-size: 40px;
+
   padding-right: 20px;
   padding-left: 20px;
 `;

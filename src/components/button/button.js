@@ -14,8 +14,7 @@ const Wrapper = styled(Link)`
   justify-content: center;
   border-radius: 4px;
   color: black;
-  text-decoration: none;
-  background-color: gray;
+  background-color: rgb(85, 26, 139);;
   border: 2px solid gray;
   &:hover {
     background-color: #ffffff;

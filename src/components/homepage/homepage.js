@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { Header } from "./components/header";
-import { ProductForm } from "./components/forms";
+import {PageWrapper} from "../pageWrapper";
 
 const Homepage = () => (
-  <Wrapper>
-    <Header />
+  <PageWrapper>
 
-  </Wrapper>
+  </PageWrapper>
 );
 
 const Wrapper = styled.div`
