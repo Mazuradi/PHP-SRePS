@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //Add functions for adding to DB
-const dbInsertFunctions = require('../../addDBItems');
+const dbInsertFunctions = require('../../../addDBItems');
 
 //Calling GET protocol
 router.get('/', (req, res) => {
