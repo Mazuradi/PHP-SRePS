@@ -1,11 +1,7 @@
 //DatabaseAccess & access to objects (product, stock, trnsaction)
-const databaseConnection = require('./src/migrations/DBConnectionDetails');
 const product = require('./src/controllers/objectProduct');
-//const stock = require(./controllers/...??);
+const stock = require('./src/controllers/objectStock');
 //const transaction = require(./controllers/...??);
-
-//DB connection
-//const database = databaseConnection();
 
 //Adding a product to the DB from user input
 function addProduct(name, wholesale, retail) {
@@ -14,9 +10,13 @@ function addProduct(name, wholesale, retail) {
 }
 
 //Adding a stock to the DB from user input
-function addStock(productname, quantity, exprdate) {
-	//productname used to get the product id
-	//quantity & exprdate used in adding the stock item
+function addStock(product_name, quantity, exprdate) {
+	//Get the product_id from the name
+	//Function to add in objectProduct to find id of the product
+	product.getProductId(product_name, function(result) {
+		let newStock = new stock(result, quantity, exprdate);
+		newStock.addStock();
+	});
 }
 
 //Adding a transaction to the DB from user input
@@ -28,16 +28,3 @@ function addTransaction(productname, stock, quantity) {
 
 //Exporting for use in REST
 module.exports = { addProduct, addStock, addTransaction };
-
-//Data Example - for transaction
-/*var today = new Date();
-var dd = today.getDate();
-var mm = today.getMonth();
-var yyyy = today.getFullYear();
-if (dd < 10) {
-	dd = '0' + dd;
-}
-if (mm < 10) {
-	mm = '0' + mm;
-}
-today = yyyy + '-' + mm + '-' + dd;*/

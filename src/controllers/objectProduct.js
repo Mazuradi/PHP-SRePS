@@ -31,10 +31,19 @@ function Product(name, wholesale, retail) {
 	};
 }
 
-//Object created from blueprint
-//Use get id from form, for user input.
-//let producttest = new Product('baclofen', 6.7, 10.5);
-//producttest.insertProduct();
+//Function to find product ID via a name
+getProductId = (product_name, callback) => {
+	lQuery = `SELECT product_id FROM products WHERE name = '${product_name}'`;
+	database.query(lQuery, (err, results, fields) => {
+		if (err) {
+			console.log(err.message);
+		} else if (results[0] == null) {
+			console.log('Product does not exist');
+		} else {
+			//Returns the ID of the product
+			return callback(results[0].product_id);
+		}
+	});
+};
 
-//dbConnection.end(); //Ends mysql connection.
-module.exports = Product;
+module.exports = { Product, getProductId };

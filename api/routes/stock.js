@@ -11,6 +11,8 @@ router.get('/', (req, res) => {
 
 //Calling POST protocol
 router.post('/', (req, res) => {
+	//Need to add body params for user input
+	dbInsertFunctions.addStock('isaac', 300, 2019 - 04 - 23);
 	res.end(`A product has been added successfully or has failed`);
 });
 
