@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { StyledTextHeading2, StyledTextParagraphMedium } from "../../../styledText";
 
 class FormInput extends React.Component {
   constructor(props) {
@@ -13,12 +14,14 @@ class FormInput extends React.Component {
 
   render() {
     return (
+      <div style={{width: "100%"}}>
       <InputWrapper
         name={this.props.name}
         value={this.value}
         onChange={this.handleChange}
         placeholder={this.placeholder}
       />
+      </div>
     );
   }
 }
@@ -27,7 +30,7 @@ class ProductForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      productName: null,
+        productName: null,
       productRetail: null,
       productWholesale: null
     };
@@ -38,9 +41,11 @@ class ProductForm extends React.Component {
 
   handleSubmit(event) {
     const state = this.state;
-    if(state.productRetail && state.productName && state.productWholesale)
+    if(state.productRetail && state.productName && state.productWholesale){
       alert('You created the product: ' + this.state.productName);
-    else
+      // const newProd = new Product(state.productName, state.productWholesale, state.productRetail) ;
+      // newProd.insertProduct();
+    } else
       alert('Please use all fields');
   }
 
@@ -57,6 +62,7 @@ class ProductForm extends React.Component {
   render() {
     return (
       <Wrapper>
+        <StyledTextHeading2>Create a Product</StyledTextHeading2>
         <FormBody>
           <FormInput
             name={"productName"}
@@ -89,14 +95,25 @@ class ProductForm extends React.Component {
   }
 }
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
-const InputWrapper = styled.input``;
+const InputWrapper = styled.input`
+  height: 40px;
+  border-radius: 4px;
+  width:100%; 
+  margin-bottom: 20px;
+  font-size: 36px;
+`;
 
 const FormBody = styled.form`
   display: flex;
+  width: 100%;
   flex-direction: column;
-  max-width: 400px;
+  align-items: center;
 `;
 
 const SubmitButton = styled.div`
@@ -109,9 +126,15 @@ const SubmitButton = styled.div`
   text-decoration: none;
   background-color: gray;
   border: 2px solid gray;
+  max-width: 400px;
+  height: 40px;
   &:hover {
     background-color: #ffffff;
   }
+    font-size: 40px;
+    
+  padding-right: 20px;
+  padding-left: 20px;
 `;
 
 export { ProductForm };

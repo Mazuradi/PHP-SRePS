@@ -6,7 +6,7 @@ import { ProductForm } from "./components/forms";
 const Homepage = () => (
   <Wrapper>
     <Header />
-    <ProductForm/>
+
   </Wrapper>
 );
 

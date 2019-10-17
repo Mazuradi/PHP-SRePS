@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React from "react";
+import { Link } from "gatsby";
 
 const StyledText = ({
   color,
@@ -133,6 +134,10 @@ const StyledTextLink = styled.a`
   text-decoration: underline;
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+
 export {
   StyledText,
   StyledTextHeading1,
@@ -144,5 +149,6 @@ export {
   StyledTextHeading3,
   StyledTextLink,
   StyledTextSection,
-  StyledTextCaption
+  StyledTextCaption,
+  StyledLink
 };
