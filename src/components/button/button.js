@@ -7,8 +7,6 @@ const ButtonUnStyled = ({ buttonText, linkURL , className}) => (
     <Wrapper to={linkURL} className={className}>  <StyledTextHeading3>{buttonText}</StyledTextHeading3></Wrapper>
 );
 
-
-
 const Wrapper = styled(Link)`
   text-decoration: none;
   display: flex;
