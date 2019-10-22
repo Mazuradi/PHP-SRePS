@@ -6,7 +6,7 @@ var util = require('util');
 
 tests();
 
-function tests() {
+async function tests() {
 	//TEST ADD STOCK
 	let stockObj = new Stock(1, 20, `2019/12/16`);
 	stockObj.addStock();
@@ -15,11 +15,8 @@ function tests() {
 	updateStock(1, 50);
 
 	//TEST GET STOCK DATA
-	getStockData(function(stockData) {
-		console.log('stock data: ', JSON.stringify(stockData));
-
-		//code to do stuff with stockData goes here
-	});
+	let stockData = await getStockData();
+	console.log('stock data', stockData);
 }
 
 function Stock(product_id, quantity, expiration_date) {
@@ -95,25 +92,27 @@ function updateStock(stockId, newQuantity) {
  * @return Array of objects with properties: id, productId, quantity, expirationDate
  * 
  */
-function getStockData(callback) {
-	//get all stock  data
-	let query = `SELECT * FROM stock`;
-	database.query(query, function(err, results) {
-		var stockData = [];			
-		if (err) {
-			console.log(err.message);
-		}
-		else {
-			for (var i=0; i<results.length; i++) {
-				stockData.push({ id:			 results[i].stock_id,
-								 productId: 	 results[i].product_id,
-								 quantity: 		 results[i].quantity,
-								 expirationDate: results[i].exp_date});
+async function getStockData(){
+	return new Promise(function(resolve, reject){
+		//get all stock record data
+		let query = `SELECT * FROM stock`;
+		database.query(query, 
+			function(err, results) {
+				if (err) {
+					console.log(err.message);
+				}
+				else {
+					var stockData = [];
+					for (var i=0; i<results.length; i++) {
+						stockData.push({ id:			 results[i].stock_id,
+										productId: 	 results[i].product_id,
+										quantity: 		 results[i].quantity,
+										expirationDate: results[i].exp_date});
+					}
+
+					console.log('Successfully retreived stock data');
+					resolve(stockData);
+				}
 			}
-
-			console.log('Successfully retreived stock data');
-		}
-
-		return callback(stockData);
-	});
-}
+	)}
+)}
