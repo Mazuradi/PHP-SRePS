@@ -7,8 +7,6 @@ const ButtonUnStyled = ({ buttonText, linkURL , className}) => (
     <Wrapper to={linkURL} className={className}>  <StyledTextHeading3>{buttonText}</StyledTextHeading3></Wrapper>
 );
 
-
-
 const Wrapper = styled(Link)`
   text-decoration: none;
   display: flex;
@@ -16,8 +14,7 @@ const Wrapper = styled(Link)`
   justify-content: center;
   border-radius: 4px;
   color: black;
-  text-decoration: none;
-  background-color: gray;
+  background-color: rgb(85, 26, 139);;
   border: 2px solid gray;
   &:hover {
     background-color: #ffffff;

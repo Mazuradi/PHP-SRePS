@@ -1,81 +1,88 @@
-const databaseConnection = require('../migrations/DBConnectionDetails');
-
 //Database connection
+const databaseConnection = require('../migrations/DBConnectionDetails');
 const database = databaseConnection();
 
-let transactionTest = new Transaction(1122, 4, 2019);
-transactionTest.insertTransaction();
-function Transaction(sale_id, quantity, date, stock_id, product_id)
+function Transaction (productname, exprdate, quantity)
 {
-    this.saleid = sale_id; //not too sure what this is used for again
     this.quantitynum = quantity;
-    this.datenum = date;
-    this.stockid = stock_id;
-    this.productid = product_id;
+    this.exdate = exprdate;
+    this.prodname = productname;
     
-    //check if product exists for transaction
-    let checkProductQuery = `SELECT COUNT(*) AS count FROM products WHERE product_id = '${this.productid}'`;
-
-    //check if there is stock of said product
-    let checkStockQuery = `SELECT COUNT(*) AS count FROM stock WHERE stock_id = '${this.stockid}' AND product_id = '${this.productid}'`; 
-    
-    //check if there is enough stock for a sale
-    let checkEnoughStockQuery = `SELECT COUNT(*) AS count FROM stock WHERE stock_id = '${this.stockid}' AND product_id = '${this.productid}' AND quantity >= '${this.quantitynum}'`;
-    
-    //reduce stock due to sale
-    let saleStockQuery = `UPDATE stock SET quantity = quantity - '${this.quantitynum}'
-                        WHERE stock_id = '${this.stockid}' AND product_id = '${this.productid}' AND quantity >= '${this.quantitynum}'`; 
-    
-    // increase stock due to refund
-    let refundStockQuery = `UPDATE stock SET quantity = quantity + '${this.quantitynum}'
-                        WHERE stock_id = '${this.stockid}' AND product_id = '${this.productid}'`;
-    
-    //add into transaction table
-    let updateTransactions = `INSERT INTO transactions(sale_id, quantity, date, stock_id, product_id)
-                    VALUES('${this.saleid}', '${this.quantitynum}', '${this.datenum}', '${this.stockid}', '${this.productid}')`;
-
+    let checkProductQuery = `SELECT product_id FROM products WHERE name = '${this.prodname}'`;
     this.saleTransaction = function()
-    {   
+    {
         database.query(checkProductQuery, (err, results, fields) =>
         {
+            var finalProduct_id;
+            var product_ids = [];
+            var stock_id = [];
             if (err)
             {console.log(err.message);}
-
-            else if (results[0].count == 0)
+            else if (results == '')
             {console.log('Product does not exist');}
-
             else
             {
-                database.query(checkEnoughStockQuery, (err, results, fields) => 
+                for (var i = 0; i <results.length;i++)
                 {
-                    if(err)
-                    {console.log(err.message);}
-
-                    else if (results[0].count == 0)
-                    {console.log('Stock does not exist/Not Enough Stock');}
-
-                    else 
+                    product_ids.push(results[i].product_id);
+                    console.log('Product Found! Product_id: ' + product_ids[i]);
+                }
+                for (var i = 0; i < product_ids.length;i++)
+                {
+                    let checkCorrectStockQuery = `SELECT stock_id FROM stock WHERE product_id = '${product_ids[i]}' AND exp_date = '${this.exdate}'`;
+                    database.query(checkCorrectStockQuery, (err, results, fields) =>
                     {
-                        database.query(saleStockQuery, (err, results, fields) =>
+                        if(err)
+                        {console.log(err.message);}
+                        else if (results == '')
+                        {}
+                        else
                         {
-                            if(err)
-                            {console.log(err.message);}
-
-                            else
+                            stock_id.push(results[0].stock_id);
+                            console.log('Stock Found! Stock_id: ' + stock_id[0]);
+                            let productidQuery = `SELECT product_id FROM stock WHERE stock_id = '${stock_id[0]}'`;
+                            database.query(productidQuery, (err, results, field) =>
                             {
-                                console.log('Quantity Successfully Updated!');
-                                database.query(updateTransactions, (err, results, fields) => 
+                                finalProduct_id = results[0].product_id;
+                            });
+                            let checkEnoughStockQuery = `SELECT COUNT(*) as count FROM stock WHERE stock_id ='${stock_id}' AND quantity >= '${this.quantitynum}'`;
+                            database.query(checkEnoughStockQuery, (err, results, fields) =>
+                            {
+                                if(err)
+                                {console.log(err.message);}
+                                else if(results[0].count == 0)
+                                {console.log('Not enough stock');}
+                                else
                                 {
-                                    if (err)
-                                    {console.log(err.message);}
+                                    let saleStockQuery = `UPDATE stock SET quantity = quantity - '${this.quantitynum}'
+                                    WHERE stock_id = '${stock_id[0]}'`;
+                                    database.query(saleStockQuery, (err, results, fields) =>
+                                    {
+                                        if(err)
+                                        {console.log(err.message);}
+                                        else
+                                        {
+                                            console.log('Quantity Successfully Updated!');
+                                            
+                                            let salequantitynum = '-' + this.quantitynum;
+                                            console.log(salequantitynum);
+                                            let updateTransactions = `INSERT INTO transactions(quantity, stock_id, product_id, date)
+                                            VALUES('${salequantitynum}', '${stock_id}', '${finalProduct_id}', CURRENT_DATE())`;
+                                            database.query(updateTransactions, (err, results, fields) => 
+                                            {
+                                                if (err)
+                                                {console.log(err.message);}
 
-                                    else
-                                    {console.log('Transaction Added Successfully!');}
-                                });
-                            }
-                        });  
-                    }
-                });
+                                                else
+                                                {console.log('Transaction Added Successfully!');}
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
             }
         });
     }
@@ -84,62 +91,142 @@ function Transaction(sale_id, quantity, date, stock_id, product_id)
     {
         database.query(checkProductQuery, (err, results, fields) =>
         {
+            var finalProduct_id;
+            var product_ids = [];
+            var stock_id = [];
             if (err)
             {console.log(err.message);}
-
-            else if (results[0].count == 0)
+            else if (results == '')
             {console.log('Product does not exist');}
-
             else
             {
-                database.query(checkStockQuery, (err, results, fields) => 
+                for (var i = 0; i <results.length;i++)
                 {
-                    if(err)
-                    {console.log(err.message);}
-
-                    else if (results[0].count == 0)
-                    {console.log('Stock does not exist');}
-
-                    else 
+                    product_ids.push(results[i].product_id);
+                    console.log('Product Found! Product_id: ' + product_ids[i]);
+                }
+                for (var i = 0; i < product_ids.length;i++)
+                {
+                    let checkCorrectStockQuery = `SELECT stock_id FROM stock WHERE product_id = '${product_ids[i]}' AND exp_date = '${this.exdate}'`;
+                    database.query(checkCorrectStockQuery, (err, results, fields) =>
                     {
-                        database.query(refundStockQuery, (err, results, fields) =>
+                        if(err)
+                        {console.log(err.message);}
+                        else if (results == '')
+                        {}
+                        else
                         {
-                            if(err)
-                            {console.log(err.message);}
-
-                            else
+                            stock_id.push(results[0].stock_id);
+                            console.log('Stock Found! Stock_id: ' + stock_id[0]);
+                            let productidQuery = `SELECT product_id FROM stock WHERE stock_id = '${stock_id[0]}'`;
+                            database.query(productidQuery, (err, results, field) =>
                             {
-                                console.log('Quantity Successfully Updated!');
-                                database.query(updateTransactions, (err, results, fields) => 
+                                finalProduct_id = results[0].product_id;
+                            });
+                            let RefundStockQuery = `UPDATE stock SET quantity = quantity + '${this.quantitynum}'
+                            WHERE stock_id = '${stock_id[0]}'`;
+                            database.query(RefundStockQuery, (err, results, fields) =>
+                            {
+                                if(err)
+                                {console.log(err.message);}
+                                else
                                 {
-                                    if (err)
-                                    {console.log(err.message);}
-
-                                    else
-                                    {console.log('Transaction Added Successfully!');}
-                                });
-                            }
-                        });  
-                    }
-                });
+                                    console.log('Quantity Successfully Updated!');
+                                    let updateTransactions = `INSERT INTO transactions(quantity, stock_id, product_id, date)
+                                    VALUES('${this.quantitynum}', '${stock_id}', '${finalProduct_id}', CURRENT_DATE())`;
+                                    database.query(updateTransactions, (err, results, fields) => 
+                                    {
+                                        if (err)
+                                        {console.log(err.message);}
+                                        else
+                                        {console.log('Transaction Added Successfully!');}
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
             }
         });
     }
 }
 
-//Basic (imcomplete) Testing of Sale and Refunds
-/*let stockaddtest = database.query(`INSERT INTO stock(product_id, quantity, exp_date) VALUES (2, 50, '2019/12/15')`, (err, results, fields) =>
+//another way of doing refunds
+function refundingTransaction(transaction_id)
 {
-    if (err){
-        console.log(err.message);
-    }
-    else{
-        console.log('Stock successfully added');
-    }
-}); */
+    this.transac_id = transaction_id;
+    var stock_id;
+    var quantity; 
 
-let saletest = new Transaction(5, 20, `2019/12/15`, 6, 2);
-let saletest2 = new Transaction(5, 7, `2019/12/15`, 8, 3);
-//saletest2.saleTransaction();
+    let grabTransactionDataQuery = `SELECT quantity, stock_id, product_id FROM transactions WHERE transaction_id = '${this.transac_id}'`;
+    database.query(grabTransactionDataQuery, (err, results, fields) =>
+    {
+        if (err)
+        {console.log(err.message);}
+        else if (results == '')
+        {console.log('No transaction found');}
+        else if (results[0].quantity < 0)
+        {console.log('Cannot refund a refunds transaction');}
+        else
+        {
+            rStock_id = results[0].stock_id;
+            rQuantity = results[0].quantity;
+
+            let updateTransactionsQuery = `INSERT INTO transactions(quantity, stock_id, product_id, date)
+            VALUES('-' + '${rQuantity}', '${rStock_id}', '${results[0].product_id}', CURRENT_DATE())`;
+            database.query(updateTransactionsQuery, (err, results, fields) => 
+            {
+                if (err)
+                {console.log(err.message);}
+                else
+                {console.log('Transaction Added');}
+            });
+
+            let updateStockQuery = `UPDATE stock SET quantity = quantity + '${rQuantity}' WHERE stock_id = '${rStock_id}'`;
+            database.query(updateStockQuery, (err, results, fields) => 
+            {
+                if (err)
+                {console.log(err.message);}
+                else
+                {console.log('Stock updated');}
+            });
+        }
+    });
+} 
+
+function getTransactionData(callback)
+{
+    let transactionDataQuery = `SELECT * FROM transactions`;
+    database.query(transactionDataQuery, function (err, results)
+    {
+        var transactionData = []
+        if (err)
+        {console.log(err.message);}
+        else
+        {
+            for (var i = 0; i < results.length; i++)
+            {
+                transactionData.push({
+                    transaction_id: results[i].transaction_id,
+                    quantity: results[i].quantity,
+                    date: results[i].date
+                });
+            }
+            console.log('Successfully retrieved transaction data');
+        }
+
+        return callback(transactionData);
+    }); 
+}
+
+getTransactionData(function(transactionData)
+{
+    console.log('transaction data: ', JSON.stringify(transactionData));
+});
+
+//let saletest = new Transaction('panadol', '2012-10-10', 2);
 //saletest.saleTransaction();
+//refundingTransaction(30);
 //saletest.refundTransaction();
+
+module.exports = Transaction;

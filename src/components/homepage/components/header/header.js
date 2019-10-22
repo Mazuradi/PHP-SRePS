@@ -1,15 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { StyledTextHeading1 } from "../../../styledText";
+import { StyledTextHeading1, StyledLink} from "../../../styledText";
 import { ButtonUnStyled } from "../../../button";
 
 const Header = () => (
   <Wrapper>
-    <HeaderTitle>PHPSREP</HeaderTitle>
-    <HeaderButton buttonText={"Test"} linkURL={"/"} />
-    <HeaderButton buttonText={"hello"} linkURL={"/hello"} />
-    <HeaderButton buttonText={"Test"} linkURL={"/"} />
-    <HeaderButton buttonText={"Test"} linkURL={"/"} />
+    <StyledLink to={'/'}><HeaderTitle>PHPSREP</HeaderTitle></StyledLink>
+    <HeaderButton buttonText={"Products"} linkURL={"/Products"} />
+    <HeaderButton buttonText={"Stock"} linkURL={"/Stock"} />
+    <HeaderButton buttonText={"Transactions"} linkURL={"/Transactions"} />
+    <HeaderButton buttonText={"Reports"} linkURL={"/Reports"} />
   </Wrapper>
 );
 
@@ -23,6 +23,8 @@ const Wrapper = styled.div`
 const HeaderButton = styled(ButtonUnStyled)`
   margin-right: 32px;
   margin-left: 32px;
+  background-color: rgb(85, 26, 139);
+  color: white;
 `;
 
 const HeaderTitle = styled(StyledTextHeading1)`
