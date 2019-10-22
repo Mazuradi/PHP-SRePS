@@ -194,7 +194,39 @@ function refundingTransaction(transaction_id)
     });
 } 
 
+function getTransactionData(callback)
+{
+    let transactionDataQuery = `SELECT * FROM transactions`;
+    database.query(transactionDataQuery, function (err, results)
+    {
+        var transactionData = []
+        if (err)
+        {console.log(err.message);}
+        else
+        {
+            for (var i = 0; i < results.length; i++)
+            {
+                transactionData.push({
+                    transaction_id: results[i].transaction_id,
+                    quantity: results[i].quantity,
+                    date: results[i].date
+                });
+            }
+            console.log('Successfully retrieved transaction data');
+        }
+
+        return callback(transactionData);
+    }); 
+}
+
+getTransactionData(function(transactionData)
+{
+    console.log('transaction data: ', JSON.stringify(transactionData));
+});
+
 //let saletest = new Transaction('panadol', '2012-10-10', 2);
 //saletest.saleTransaction();
 //refundingTransaction(30);
 //saletest.refundTransaction();
+
+module.exports = Transaction;

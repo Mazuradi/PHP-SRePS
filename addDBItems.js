@@ -1,7 +1,7 @@
 //DatabaseAccess & access to objects (product, stock, trnsaction)
 const product = require('./src/controllers/objectProduct');
 const stock = require('./src/controllers/objectStock');
-//const transaction = require(./controllers/...??);
+const transaction = require('./src/controllers/objectTransaction');
 
 //Adding a product to the DB from user input
 function addProduct(name, wholesale, retail) {
@@ -20,11 +20,15 @@ function addStock(product_name, quantity, exprdate) {
 }
 
 //Adding a transaction to the DB from user input
-function addTransaction(productname, stock, quantity) {
-	//Assume sale_id, stock_id & product_id will come from queries
-	//productname & stock for getting id
-	//Date will come from the current date
+function addSaleTransaction(productname, exprdate, quantity) {
+	let newTransaction = new Transaction(productname, exprdate, quantity);
+	newTransaction.saleTransaction();
+}
+
+//Refunding a transaction to the DB from user input
+function addRefundTransaction(transactionnum) {
+	refundingTransaction(transactionnum);
 }
 
 //Exporting for use in REST
-module.exports = { addProduct, addStock, addTransaction };
+module.exports = { addProduct, addStock, addSaleTransaction, addRefundTransaction };
