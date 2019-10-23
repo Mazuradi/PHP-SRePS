@@ -2,9 +2,7 @@
 const databaseConnection = require('../migrations/DBConnectionDetails');
 const database = databaseConnection();
 
-var util = require('util');
-
-//tests();
+tests();
 
 async function tests() {
 	//TEST ADD STOCK
