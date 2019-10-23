@@ -78,4 +78,4 @@ async function tests() {
     console.log('productsData', productsData);
 }*/
 
-module.exports = { Product, getProductId };
+module.exports = { Product, getProductId, getProductsData };

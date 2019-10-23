@@ -233,4 +233,4 @@ async function tests() {
 //refundingTransaction(30);
 //saletest.refundTransaction();
 
-module.exports = Transaction;
+module.exports = {Transaction, getTransactionsData};

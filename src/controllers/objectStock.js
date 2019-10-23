@@ -116,4 +116,4 @@ async function getStockId() {
 	});
 }
 
-module.exports = Stock;
+module.exports = { Stock, getStockData, getStockId };

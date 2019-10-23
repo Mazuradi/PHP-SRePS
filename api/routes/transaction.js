@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 });
 
 //Calling POST protocol
-router.post('/', (req, res) => {
+router.post('/addtransaction', (req, res) => {
 	//May Need input of a transaction type
 	dbInsertFunctions.addTransaction(req.body.productName, req.body.quantity);
 	res.end(`A Transaction has been made, buying ${req.body.quantity} of ${req.body.productName}.`);
