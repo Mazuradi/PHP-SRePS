@@ -1,10 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-//     <main>
-//         <h1>Transactions</h1>
-//         <p>Transaction Type</p>
-//     </main>
-// )
 
 class RadioInput extends React.Component {
     constructor(props) {
@@ -20,7 +15,7 @@ class RadioInput extends React.Component {
   
     render() {
       return (
-        <InputWrapper
+        <RadioInputWrapper
           name={this.name}
           id={this.id}
           type={this.type}
@@ -59,34 +54,27 @@ class TransactionForm extends React.Component {
       super(props);
       this.state = {
         transactionType: null,
-        product_id: null,
-        stock_id: null,
-        date: null,
+        productname: null,
         quantity: null,
-        sale_id: null
+        exprdate: null
       };
   
       this.handleInputChange = this.handleInputChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
     
-    //fix validation
     handleSubmit(event) {
       const state = this.state;
       if(!state.transactionType)
         alert("Please select a transaction type");
-      else if (!state.product_id)
-        alert('Please enter a Product ID');
-      else if(!state.stock_id)
-        alert('Please enter a Stock ID');
-      else if(!state.date)
-        alert('Please enter a date');
+      else if (!state.productname)
+        alert('Please enter a Product Name');
       else if(!state.quantity)
-        alert('Please enter a quantity');
-      else if(!state.sale_id)
-        alert('Please enter a Sale ID');  
+        alert('Please enter a Quantity'); 
+      else if(!state.exprdate)
+        alert('Please enter an Expiry Date in the form YYYY-MM-DD');
       else
-      alert('Transaction Added');
+        alert('Transaction Added');
     }
   
     handleInputChange(event) {
@@ -120,33 +108,21 @@ class TransactionForm extends React.Component {
               handleChange={this.handleInputChange}
             />
             <FormInput
-            name={"product_id"}
-            value={this.state.product_id }
-            placeholder={"Product ID"}
-            handleChange={this.handleInputChange}
-            />
-            <FormInput
-            name={"stock_id"}
-            value={this.state.stock_id }
-            placeholder={"Stock ID"}
-            handleChange={this.handleInputChange}
-            />
-            <FormInput
-            name={"date"}
-            value={this.state.date }
-            placeholder={"Date"}
+            name={"productname"}
+            value={this.state.product_id}
+            placeholder={"Product Name"}
             handleChange={this.handleInputChange}
             />
             <FormInput
             name={"quantity"}
-            value={this.state.quantity }
+            value={this.state.quantity}
             placeholder={"Quantity"}
             handleChange={this.handleInputChange}
             />
             <FormInput
-            name={"sale_id"}
-            value={this.state.sale_id }
-            placeholder={"Sale ID"}
+            name={"exprdate"}
+            value={this.state.exprdate}
+            placeholder={"Expiry Date: YYYY-MM-DD"}
             handleChange={this.handleInputChange}
             />
             <SubmitButton
@@ -162,14 +138,31 @@ class TransactionForm extends React.Component {
     }
 }
 
-const Wrapper = styled.div``;
+const RadioInputWrapper = styled.input`
+height: 20px;
+border-radius: 4px;
+width: 100%;
+margin-bottom: 10px;
+`;
 
-const InputWrapper = styled.input``;
+const Wrapper = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: center;
+`;
 
+const InputWrapper = styled.input`
+  height: 40px;
+  border-radius: 4px;
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 36px;
+`;
 const FormBody = styled.form`
   display: flex;
+  width: 100%;
   flex-direction: column;
-  max-width: 400px;
+  align-items: center;
 `;
 
 const SubmitButton = styled.div`
@@ -182,9 +175,15 @@ const SubmitButton = styled.div`
   text-decoration: none;
   background-color: gray;
   border: 2px solid gray;
+  max-width: 400px;
+  height: 40px;
   &:hover {
     background-color: #ffffff;
   }
+  font-size: 40px;
+
+  padding-right: 20px;
+  padding-left: 20px;
 `;
 
 export {TransactionForm}
