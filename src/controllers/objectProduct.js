@@ -47,3 +47,38 @@ getProductId = (product_name, callback) => {
 };
 
 module.exports = { Product, getProductId };
+
+function getProductsData() {
+    return new Promise(function (resolve, reject) {
+        let query = `SELECT * FROM products`;
+        database.query(query,
+            function (err, results) {
+                if (err) {
+                    console.log(err.message);
+                }
+                else {
+                    var productsData = [];
+                    for (var i = 0; i < results.length; i++) {
+                        productsData.push({
+                            id: results[i].product_id,
+                            name: results[i].name,
+                            wholesalePrice: results[i].wholesale_price,
+                            retailPrice: results[i].retail_price
+                        });
+                    }
+
+                    //console.log('Successfully retreived products data');
+                    resolve(productsData);
+                }
+            }
+        )
+    }
+    )
+}
+
+/*tests();
+
+async function tests() {
+    var productsData = await getProductsData();
+    console.log('productsData', productsData);
+}*/
