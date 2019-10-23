@@ -14,4 +14,12 @@ router.get('/', (req, res, next) => {
 router.post('/generatecsvraw', (req, res, next) => {
 	//Generates CSV File of raw data.
 	csvraw.generateRawCSV();
+	res.end('Successful Generation of Raw CSV');
 });
+
+router.post('/generatecsvsales', (req, res, next) => {
+	csvsales.generateCSV();
+	res.end('Successful Generation of Sales CSV');
+});
+
+module.exports = router;
