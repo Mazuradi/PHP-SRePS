@@ -194,35 +194,39 @@ function refundingTransaction(transaction_id)
     });
 } 
 
-function getTransactionData(callback)
-{
-    let transactionDataQuery = `SELECT * FROM transactions`;
-    database.query(transactionDataQuery, function (err, results)
-    {
-        var transactionData = []
-        if (err)
-        {console.log(err.message);}
-        else
-        {
-            for (var i = 0; i < results.length; i++)
-            {
-                transactionData.push({
-                    transaction_id: results[i].transaction_id,
-                    quantity: results[i].quantity,
-                    date: results[i].date
-                });
+function getTransactionsData() {
+    return new Promise(function (resolve, reject) {
+        let query = `SELECT * FROM transactions`;
+        database.query(query, function (err, results) {
+            var transactionsData = [];
+            if (err) {
+                console.log(err.message);
             }
-            console.log('Successfully retrieved transaction data');
-        }
+            else {
+                for (var i = 0; i < results.length; i++) {
+                    transactionsData.push({
+                        id: results[i].transaction_id,
+                        qty: results[i].quantity,
+                        date: results[i].date,
+                        productId: results[i].product_id
+                    });
+                }
 
-        return callback(transactionData);
-    }); 
+                //console.log('Successfully retreived transactions data');
+                resolve(transactionsData);
+            }
+        }
+        )
+    }
+    )
 }
 
-getTransactionData(function(transactionData)
-{
-    console.log('transaction data: ', JSON.stringify(transactionData));
-});
+/*tests();
+
+async function tests() {
+    var transactionsData = await getTransactionsData();
+    console.log('transactions data', transactionsData);
+}*/
 
 //let saletest = new Transaction('panadol', '2012-10-10', 2);
 //saletest.saleTransaction();
