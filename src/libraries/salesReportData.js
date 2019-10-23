@@ -83,7 +83,7 @@ function getTransactionsData() {
 //the 3 functions above are located in different files (in the controllers folder) and have just been added for testing
 //they need to be removed from this file
 
-tests();
+//tests();
 
 async function tests() {
 	var currentPeriodsPurchasingQtys = await getCurrentPeriodsPurchasingQtys();

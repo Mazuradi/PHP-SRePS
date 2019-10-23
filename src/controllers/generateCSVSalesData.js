@@ -48,4 +48,4 @@ generateCSV = async () => {
 	});
 };
 
-generateCSV();
+module.exports = { generateCSV };
