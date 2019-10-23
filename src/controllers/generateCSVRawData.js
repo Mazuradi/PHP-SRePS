@@ -66,4 +66,4 @@ generateRawCSV = () => {
 	});
 };
 
-module.exports = generateRawCSV;
+module.exports = { generateRawCSV };
