@@ -11,11 +11,13 @@ app.use(bodyParser.json());
 const productRoutes = require('./api/routes/product');
 const stockRoutes = require('./api/routes/stock');
 const transactionRoutes = require('./api/routes/transaction');
+const csvRoutes = require('./api/routes/csvroutes');
 
 //Routes to handle requests
-app.use('/addproduct', productRoutes);
-app.use('/addstock', stockRoutes);
-app.use('/addtransaction', transactionRoutes);
+app.use('/product', productRoutes);
+app.use('/stock', stockRoutes);
+app.use('/transaction', transactionRoutes);
+app.use('/csvdata', csvRoutes);
 
 //----------Homepage---------------------------
 app.get('/', (req, res) => {

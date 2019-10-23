@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 });
 
 //Calling POST protocol
-router.post('/', (req, res) => {
+router.post('/addstock', (req, res) => {
 	//Need to add body params for user input
 	dbInsertFunctions.addStock(req.body.productName, req.body.quantity, req.body.exprdate);
 	res.end(`Name: ${req.body.productName}, Quantity: ${req.body.quantity}, Expr Date: ${req.body.exprdate}`);

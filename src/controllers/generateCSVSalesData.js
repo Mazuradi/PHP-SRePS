@@ -1,5 +1,6 @@
 const databaseConnection = require('../migrations/DBConnectionDetails');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const salesData = require('../libraries/salesReportData');
 
 //Database Connection
 const database = databaseConnection();
@@ -25,9 +26,26 @@ const datetime = `${date}_${time}`;
 const csvWriter = createCsvWriter({
 	path: `./CSVlogs/saledatalog${datetime}.csv`,
 	//Need to add what goes in The Sales CSV
-	header: [ { id: 'transaction_id', title: 'TRANSACTION ID' } ]
+	header: [
+		{ id: 'productId', title: 'PRODUCT ID' },
+		{ id: 'productName', title: 'PRODUCT NAME' },
+		{ id: 'unitsSold', title: 'UNITS SOLD' },
+		{ id: 'revenue', title: 'REVENUE' },
+		{ id: 'popularity', title: 'POPULARITY' }
+	]
 });
 
 //Add the results using sales library
 //The functions return arrays I believe so add that in
 //Then write it to the csv generated
+//Probs wanna use last period sales, sales analytics & current purchasing qtys.
+generateCSV = async () => {
+	var analytics = await salesData.getLastPeriodsSalesAlantytics();
+
+	csvWriter.writeRecords(analytics).then(() => {
+		//returns promise of csv being complete
+		console.log('...CSV Generated!!');
+	});
+};
+
+generateCSV();

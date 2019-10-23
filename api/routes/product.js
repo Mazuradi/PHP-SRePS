@@ -10,7 +10,7 @@ router.get('/', (req, res, next) => {
 });
 
 //Calling POST protocol
-router.post('/', (req, res, next) => {
+router.post('/addproduct', (req, res, next) => {
 	//Function for adding to db
 	dbInsertFunctions.addProduct(req.body.productName, req.body.wholesale_price, req.body.retail_price);
 	res.end(
