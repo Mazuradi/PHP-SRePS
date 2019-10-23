@@ -150,6 +150,10 @@ async function getCurrentPeriodsPurchasingQtys() {
         });
     }
 
+    currentPeriodsPurchasingQtys.sort(function (a, b) {
+        return a.productId - b.productId;
+    });
+
     return currentPeriodsPurchasingQtys;
 }
 
@@ -199,6 +203,10 @@ async function getLastPeriodsSalesAlantytics() {
             popularity: popularityNumber
         });
     }
+
+    lastPeriodsSalesAlantytics.sort(function (a, b) {
+        return a.productId - b.productId;
+    });
 
     return lastPeriodsSalesAlantytics;
 }
