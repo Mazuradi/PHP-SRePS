@@ -2,7 +2,7 @@
 const databaseConnection = require('../migrations/DBConnectionDetails');
 const database = databaseConnection();
 
-tests();
+//tests();
 
 async function tests() {
 	//TEST ADD STOCK
@@ -83,27 +83,37 @@ function updateStock(stockId, newQuantity) {
  * @return Array of objects with properties: id, productId, quantity, expirationDate
  * 
  */
-async function getStockData(){
-	return new Promise(function(resolve, reject){
+async function getStockData() {
+	return new Promise(function(resolve, reject) {
 		//get all stock record data
 		let query = `SELECT * FROM stock`;
-		database.query(query, 
-			function(err, results) {
-				if (err) {
-					console.log(err.message);
+		database.query(query, function(err, results) {
+			if (err) {
+				console.log(err.message);
+			} else {
+				var stockData = [];
+				for (var i = 0; i < results.length; i++) {
+					stockData.push({
+						id: results[i].stock_id,
+						productId: results[i].product_id,
+						quantity: results[i].quantity,
+						expirationDate: results[i].exp_date
+					});
 				}
-				else {
-					var stockData = [];
-					for (var i=0; i<results.length; i++) {
-						stockData.push({ id:			 results[i].stock_id,
-										productId: 	 results[i].product_id,
-										quantity: 		 results[i].quantity,
-										expirationDate: results[i].exp_date});
-					}
 
-					console.log('Successfully retreived stock data');
-					resolve(stockData);
-				}
+				console.log('Successfully retreived stock data');
+				resolve(stockData);
 			}
-	)}
-)}
+		});
+	});
+}
+
+//Function to get Stock Id
+async function getStockId() {
+	return new Promise(function(resolve, reject) {
+		//Get ID using parameters - product_id & expr_date??
+		//empty atm
+	});
+}
+
+module.exports = Stock;

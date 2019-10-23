@@ -10,13 +10,13 @@ function addProduct(name, wholesale, retail) {
 }
 
 //Adding a stock to the DB from user input
-function addStock(product_name, quantity, exprdate) {
+async function addStock(product_name, quantity, exprdate) {
 	//Get the product_id from the name
 	//Function to add in objectProduct to find id of the product
-	product.getProductId(product_name, function(result) {
-		let newStock = new stock(result, quantity, exprdate);
-		newStock.addStock();
-	});
+	var pr_id = await product.getProductId(product_name);
+	console.log(pr_id);
+	let newStock = new stock(pr_id, quantity, exprdate);
+	newStock.addStock();
 }
 
 //Adding a transaction to the DB from user input
