@@ -21,7 +21,7 @@ async function addStock(product_name, quantity, exprdate) {
 
 //Adding a transaction to the DB from user input
 function addSaleTransaction(productname, exprdate, quantity) {
-	let newTransaction = new Transaction(productname, exprdate, quantity);
+	let newTransaction = new transaction(productname, exprdate, quantity);
 	newTransaction.saleTransaction();
 }
 

@@ -22,12 +22,12 @@ function Transaction (productname, exprdate, quantity)
             {console.log('Product does not exist');}
             else
             {
-                for (var i = 0; i <results.length;i++)
+                for (let i = 0; i <results.length;i++)
                 {
                     product_ids.push(results[i].product_id);
                     console.log('Product Found! Product_id: ' + product_ids[i]);
                 }
-                for (var i = 0; i < product_ids.length;i++)
+                for (let i = 0; i < product_ids.length;i++)
                 {
                     let checkCorrectStockQuery = `SELECT stock_id FROM stock WHERE product_id = '${product_ids[i]}' AND exp_date = '${this.exdate}'`;
                     database.query(checkCorrectStockQuery, (err, results, fields) =>
@@ -65,7 +65,6 @@ function Transaction (productname, exprdate, quantity)
                                             console.log('Quantity Successfully Updated!');
                                             
                                             let salequantitynum = '-' + this.quantitynum;
-                                            console.log(salequantitynum);
                                             let updateTransactions = `INSERT INTO transactions(quantity, stock_id, product_id, date)
                                             VALUES('${salequantitynum}', '${stock_id}', '${finalProduct_id}', CURRENT_DATE())`;
                                             database.query(updateTransactions, (err, results, fields) => 
@@ -100,12 +99,12 @@ function Transaction (productname, exprdate, quantity)
             {console.log('Product does not exist');}
             else
             {
-                for (var i = 0; i <results.length;i++)
+                for (let i = 0; i <results.length;i++)
                 {
                     product_ids.push(results[i].product_id);
                     console.log('Product Found! Product_id: ' + product_ids[i]);
                 }
-                for (var i = 0; i < product_ids.length;i++)
+                for (let i = 0; i < product_ids.length;i++)
                 {
                     let checkCorrectStockQuery = `SELECT stock_id FROM stock WHERE product_id = '${product_ids[i]}' AND exp_date = '${this.exdate}'`;
                     database.query(checkCorrectStockQuery, (err, results, fields) =>
@@ -169,8 +168,8 @@ function refundingTransaction(transaction_id)
         {console.log('Cannot refund a refunds transaction');}
         else
         {
-            rStock_id = results[0].stock_id;
-            rQuantity = results[0].quantity;
+            var rStock_id = results[0].stock_id;
+            var rQuantity = results[0].quantity;
 
             let updateTransactionsQuery = `INSERT INTO transactions(quantity, stock_id, product_id, date)
             VALUES('-' + '${rQuantity}', '${rStock_id}', '${results[0].product_id}', CURRENT_DATE())`;
@@ -228,8 +227,8 @@ async function tests() {
     console.log('transactions data', transactionsData);
 }*/
 
-//let saletest = new Transaction('panadol', '2012-10-10', 2);
-//saletest.saleTransaction();
+let saletest = new Transaction('panamax', '2020-12-12', 1);
+saletest.saleTransaction();
 //refundingTransaction(30);
 //saletest.refundTransaction();
 
