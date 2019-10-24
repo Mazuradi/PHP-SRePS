@@ -6,10 +6,6 @@ const transactiondata = require('../controllers/objectTransaction');
 const stockdata = require('../controllers/objectStock');
 const productdata = require('../controllers/objectProduct');
 
-/*-------------------------------------------------------------------------------------*/
-//the 3 functions above are located in different files (in the controllers folder) and have just been added for testing
-//they need to be removed from this file
-
 //tests();
 
 async function tests() {
@@ -91,7 +87,7 @@ async function getLastPeriodsSalesAlantytics() {
 	var lastPeriodsSalesAlantytics = [];
 
 	for (var i = 0; i < lastPeriodsSales.length; i++) {
-		if (popularityNumber < 5) {
+		if (popularityNumber < 4) {
 			if (i == 0) {
 				if (loopCount == sizeOfPopularityClass) {
 					loopCount = 1;
@@ -123,6 +119,14 @@ async function getLastPeriodsSalesAlantytics() {
 	lastPeriodsSalesAlantytics.sort(function(a, b) {
 		return a.productId - b.productId;
 	});
+
+	//commented out lines bellow are for testing popularity
+	/*lastPeriodsSalesAlantytics.sort(function(a, b) {
+		return a.popularity - b.popularity;
+	});
+	for (var i=0; i<lastPeriodsSalesAlantytics.length; i++) {
+		console.log('lastPeriodsSalesAlantytics[i]', lastPeriodsSalesAlantytics[i].popularity);
+	}*/
 
 	return lastPeriodsSalesAlantytics;
 }
