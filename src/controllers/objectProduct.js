@@ -31,10 +31,51 @@ function Product(name, wholesale, retail) {
 	};
 }
 
-//Object created from blueprint
-//Use get id from form, for user input.
-//let producttest = new Product('baclofen', 6.7, 10.5);
-//producttest.insertProduct();
+//Function to find product ID via a name
+getProductId = (product_name) => {
+	return new Promise((resolve, reject) => {
+		let lQuery = `SELECT product_id FROM products WHERE name = '${product_name}'`;
+		database.query(lQuery, (err, results, fields) => {
+			if (err) {
+				console.log(err.message);
+			} else if (results[0] == null) {
+				console.log('Product does not exist');
+			} else {
+				resolve(results[0].product_id);
+			}
+		});
+	});
+};
 
-//dbConnection.end(); //Ends mysql connection.
-module.exports = Product;
+function getProductsData() {
+	return new Promise(function(resolve, reject) {
+		let query = `SELECT * FROM products`;
+		database.query(query, function(err, results) {
+			if (err) {
+				console.log(err.message);
+			} else {
+				var productsData = [];
+				for (var i = 0; i < results.length; i++) {
+					productsData.push({
+						id: results[i].product_id,
+						name: results[i].name,
+						wholesalePrice: results[i].wholesale_price,
+						retailPrice: results[i].retail_price
+					});
+				}
+
+				//console.log('Successfully retreived products data');
+				resolve(productsData);
+			}
+		});
+	});
+}
+
+/*tests();
+
+async function tests() {
+    var productsData = await getProductsData();
+    console.log('productsData', productsData);
+}*/
+
+module.exports = { Product, getProductId, getProductsData };
