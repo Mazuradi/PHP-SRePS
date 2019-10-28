@@ -1,12 +1,14 @@
 //DatabaseAccess & access to objects (product, stock, trnsaction)
-const product = require('./src/controllers/objectProduct');
+const Product = require('./src/controllers/objectProduct');
 const stock = require('./src/controllers/objectStock');
 const transaction = require('./src/controllers/objectTransaction');
 
 //Adding a product to the DB from user input
 function addProduct(name, wholesale, retail) {
-	let newProduct = new product(name, wholesale, retail);
+	console.log(retail);
+	let newProduct = new Product.Product(name, wholesale, retail);
 	newProduct.insertProduct();
+
 }
 
 //Adding a stock to the DB from user input

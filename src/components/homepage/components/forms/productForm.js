@@ -35,7 +35,7 @@ class ProductForm extends React.Component {
       productWholesale: null
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleInputChange =   this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 

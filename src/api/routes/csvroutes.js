@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 //Files for csv generation
-const csvraw = require('../../src/controllers/generateCSVRawData');
-const csvsales = require('../../src/controllers/generateCSVSalesData');
+const csvraw = require('../../controllers/generateCSVRawData');
+const csvsales = require('../../controllers/generateCSVSalesData');
 
 //Calling GET protocol
 router.get('/', (req, res, next) => {

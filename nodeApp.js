@@ -8,10 +8,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //Route packages / scripts
-const productRoutes = require('./api/routes/product');
-const stockRoutes = require('./api/routes/stock');
-const transactionRoutes = require('./api/routes/transaction');
-const csvRoutes = require('./api/routes/csvroutes');
+const productRoutes = require('./src/api/routes/product');
+const stockRoutes = require('./src/api/routes/stock');
+const transactionRoutes = require('./src/api/routes/transaction');
+const csvRoutes = require('./src/api/routes/csvroutes');
 
 //Routes to handle requests
 app.use('/product', productRoutes);

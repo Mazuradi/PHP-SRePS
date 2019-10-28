@@ -4,7 +4,7 @@ const databaseConnection = require('../migrations/DBConnectionDetails');
 const database = databaseConnection();
 
 //VARIATION 2 - FUNCTION STYLE
-function Product(name, wholesale, retail) {
+const Product = function (name, wholesale, retail) {
 	this.name = name;
 	this.wholesalepx = wholesale;
 	this.retailpx = retail;
@@ -29,7 +29,7 @@ function Product(name, wholesale, retail) {
 			}
 		});
 	};
-}
+};
 
 //Function to find product ID via a name
 getProductId = (product_name) => {
