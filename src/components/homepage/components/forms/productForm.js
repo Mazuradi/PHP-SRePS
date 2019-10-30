@@ -136,4 +136,4 @@ const SubmitButton = styled.div`
   padding-left: 20px;
 `;
 
-export { ProductForm };
+export { ProductForm, FormInput };
