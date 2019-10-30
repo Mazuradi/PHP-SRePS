@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { StyledTextHeading2 } from "../../../styledText";
+import { Z_NO_COMPRESSION } from "zlib";
 
 class FormInput extends React.Component {
   constructor(props) {
@@ -43,8 +44,18 @@ class ProductForm extends React.Component {
     const state = this.state;
     if (state.productRetail && state.productName && state.productWholesale) {
       alert("You created the product: " + this.state.productName);
-      // const newProd = new Product(state.productName, state.productWholesale, state.productRetail) ;
-      // newProd.insertProduct();
+      fetch("http://localhost:1337/product/addproduct", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+          productName: this.state.productName,
+          wholesale_price: this.state.productWholesale,
+          retail_price: this.state.productRetail
+      }),
+      }).then((result) => result.json());
     } else alert("Please use all fields");
   }
 

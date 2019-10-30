@@ -34,6 +34,7 @@ const Product = function (name, wholesale, retail) {
 //Function to find product ID via a name
 getProductId = (product_name) => {
 	return new Promise((resolve, reject) => {
+		console.log(product_name);
 		let lQuery = `SELECT product_id FROM products WHERE name = '${product_name}'`;
 		database.query(lQuery, (err, results, fields) => {
 			if (err) {

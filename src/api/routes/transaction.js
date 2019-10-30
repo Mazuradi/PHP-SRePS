@@ -10,10 +10,15 @@ router.get('/', (req, res) => {
 });
 
 //Calling POST protocol
-router.post('/addtransaction', (req, res) => {
+router.post('/addsaletransaction', (req, res) => {
 	//May Need input of a transaction type
-	dbInsertFunctions.addTransaction(req.body.productName, req.body.quantity);
-	res.end(`A Transaction has been made, buying ${req.body.quantity} of ${req.body.productName}.`);
+	dbInsertFunctions.addSaleTransaction(req.body.productName, req.body.exprdate, req.body.quantity);
+	res.end(`A Transaction has been made, buying ${req.body.quantity} of ${req.body.productName} with an expiry date of ${req.body.exprdate}.`);
+});
+
+router.post('/addrefundtransaction', (req, res) => {
+	dbInsertFunctions.addRefundTransaction(req.body.productName, req.body.exprdate, req.body.quantity);
+	res.end(`A Transaction has been refunded, returning ${req.body.quantity} of ${req.body.productName} with an expiry date of ${req.body.exprdate}.`);
 });
 
 module.exports = router;
