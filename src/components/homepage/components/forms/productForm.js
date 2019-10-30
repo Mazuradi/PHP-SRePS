@@ -41,11 +41,12 @@ class ProductForm extends React.Component {
 
   handleSubmit(event) {
     const state = this.state;
-    if (state.productRetail && state.productName && state.productWholesale) {
-      alert("You created the product: " + this.state.productName);
-      // const newProd = new Product(state.productName, state.productWholesale, state.productRetail) ;
-      // newProd.insertProduct();
-    } else alert("Please use all fields");
+      fetch("http://localhost:1337/product/addproduct", {
+        method: "POST",
+        headers: {'Content-Type':'application/json'
+        },
+        body: JSON.stringify(state),
+      }).then((result) => console.log(result));
   }
 
   handleInputChange(event) {

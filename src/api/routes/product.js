@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //Add functions for adding to DB
-const dbInsertFunctions = require('../../../addDBItems');
+const DB = require('../../../addDBItems');
 
 //Calling GET protocol
 router.get('/', (req, res, next) => {
@@ -11,9 +11,10 @@ router.get('/', (req, res, next) => {
 
 //Calling POST protocol
 router.post('/addproduct', (req, res, next) => {
-	//Function for adding to db
-	dbInsertFunctions.addProduct(req.body.productName, req.body.wholesale_price, req.body.retail_price);
-	res.end(
+	if (!req.body) return res.sendStatus(400);
+	console.log(req.body);
+	DB.addProduct(req.body.productName, req.body.productRetail, req.body.productWholesale);
+	res.status(200).end(
 		`Name: ${req.body.productName} - Wholesale: ${req.body.wholesale_price} - Retail: ${req.body
 			.retail_price} :-: Item Successfully Added!!`
 	);
