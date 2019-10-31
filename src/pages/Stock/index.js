@@ -8,6 +8,4 @@ const StockRoot = () => (
   </PageWrapper>
 );
 
-//const Wrapper = styled.div``;
-
 export default StockRoot;

@@ -79,6 +79,30 @@ function updateStock(stockId, newQuantity) {
 	});
 }
 
+function deleteExpiredStock(){
+	let today = new Date();
+	let dd = today.getDate();
+	let mm = today.getMonth() + 1; //January is 0!
+	let yyyy = today.getFullYear();
+
+	if(dd<10) {
+		dd = '0'+dd
+	}
+
+	if(mm<10) {
+		mm = '0'+mm
+	}
+
+	let date = `${yyyy}-${mm}-${dd}`;
+	let query = `DELETE FROM table WHERE date < ${date}`;
+
+	database.query(query, function(err, results) {
+		if (err) {
+			console.log(err.message);
+		}
+	})
+}
+
 /**
  * @return Array of objects with properties: id, productId, quantity, expirationDate
  * 
