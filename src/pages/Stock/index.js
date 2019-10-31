@@ -1,14 +1,13 @@
-import { Header } from "../../components/homepage/components/header";
-import styled from "styled-components";
+import {StockForm} from "../../components/forms/stockForm";
 import React from "react";
 import { PageWrapper } from "../../components/pageWrapper";
 
 const StockRoot = () => (
   <PageWrapper>
-
+    <StockForm/>
   </PageWrapper>
 );
 
-const Wrapper = styled.div``;
+//const Wrapper = styled.div``;
 
 export default StockRoot;

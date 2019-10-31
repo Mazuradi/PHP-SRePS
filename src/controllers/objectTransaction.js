@@ -227,8 +227,8 @@ async function tests() {
     console.log('transactions data', transactionsData);
 }*/
 
-let saletest = new Transaction('panamax', '2020-12-12', 1);
-saletest.saleTransaction();
+//let saletest = new Transaction('panamax', '2020-12-12', 1);
+//saletest.saleTransaction();
 //refundingTransaction(30);
 //saletest.refundTransaction();
 

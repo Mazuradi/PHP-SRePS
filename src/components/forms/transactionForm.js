@@ -1,149 +1,148 @@
 import React from "react";
 import styled from "styled-components";
-
-class RadioInput extends React.Component {
-    constructor(props) {
-      super(props);
-      this.name = this.props.name;
-      this.id = this.props.id;
-      this.type = this.props.type;
-      this.value = this.props.value;
-      this.state = { value: "" };
-  
-      this.handleChange = this.props.handleChange.bind(this);
-    }
-  
-    render() {
-      return (
-        <RadioInputWrapper
-          name={this.name}
-          id={this.id}
-          type={this.type}
-          value={this.value}
-          onChange={this.handleChange}
-        />
-      );
-    }
-}
+import { StyledTextHeading2 } from "../styledText";
 
 class FormInput extends React.Component {
-    constructor(props) {
-      super(props);
-      this.value = this.props.value;
-      this.placeholder = this.props.placeholder;
-      this.state = { value: "" };
+  constructor(props) {
+    super(props);
+    this.value = this.props.value;
+    this.placeholder = this.props.placeholder;
+    this.state = { value: "" };
+
+    this.handleChange = this.props.handleChange.bind(this);
+  }
   
-      this.handleChange = this.props.handleChange.bind(this);
-    }
+  render() {
+    return (
+      <InputWrapper
+        name={this.props.name}
+        value={this.value}
+        onChange={this.handleChange}
+        placeholder={this.placeholder}
+      />
+    );
+  }
+}
+
+
+class TransactionForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      productname: null,
+      quantity: null,
+      exprdate: null
+    };
   
-    render() {
-      return (
-        <InputWrapper
-          name={this.props.name}
-          value={this.value}
-          onChange={this.handleChange}
-          placeholder={this.placeholder}
-        />
-      );
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSaleSubmit = this.handleSaleSubmit.bind(this);
+    this.handleRefundSubmit = this.handleRefundSubmit.bind(this);
+  }
+    
+  handleSaleSubmit(event) {
+    const state = this.state;
+    if (!state.productname)
+      alert('Please enter a Product Name');
+    else if(!state.quantity)
+      alert('Please enter a Quantity'); 
+    else if(!state.exprdate)
+      alert('Please enter an Expiry Date in the form YYYY-MM-DD');
+    else
+    {
+      alert('Transaction Added');
+      fetch("http://localhost:1337/transaction/addsaletransaction", {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({
+        productName: this.state.productname,
+        quantity: this.state.quantity,
+        exprdate: this.state.exprdate
+      }),
+      }).then((result) => result.json());
     }
   }
 
-  
-class TransactionForm extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        transactionType: null,
-        productname: null,
-        quantity: null,
-        exprdate: null
-      };
-  
-      this.handleInputChange = this.handleInputChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
+  handleRefundSubmit(event) {
+    const state = this.state;
+    if (!state.productname)
+      alert('Please enter a Product Name');
+    else if(!state.quantity)
+      alert('Please enter a Quantity'); 
+    else if(!state.exprdate)
+      alert('Please enter an Expiry Date in the form YYYY-MM-DD');
+    else
+    {
+      alert('Transaction Added');
+      fetch("http://localhost:1337/transaction/addrefundtransaction", {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+          productName: this.state.productname,
+          quantity: this.state.quantity,
+          exprdate: this.state.exprdate
+        }),
+        }).then((result) => result.json());
     }
-    
-    handleSubmit(event) {
-      const state = this.state;
-      if(!state.transactionType)
-        alert("Please select a transaction type");
-      else if (!state.productname)
-        alert('Please enter a Product Name');
-      else if(!state.quantity)
-        alert('Please enter a Quantity'); 
-      else if(!state.exprdate)
-        alert('Please enter an Expiry Date in the form YYYY-MM-DD');
-      else
-        alert('Transaction Added');
-    }
-  
-    handleInputChange(event) {
-      const target = event.target;
-      const value = target.value;
-      const name = target.name;
-  
-      this.setState({
-        [name]: value
-      });
-    }
-  
-    render() {
-      return (
-        <Wrapper>
-          <FormBody>
-            <label for="transactionType">Sale</label>  
-            <RadioInput
-              name={"transactionType"}
-              id={"Sale"}
-              type={"radio"}
-              value={"Sale"}
-              handleChange={this.handleInputChange}
-            />
-            <label for="transactionType">Refund</label>  
-            <RadioInput
-              name={"transactionType"}
-              id={"Refund"}
-              type={"radio"}
-              value={"Refund"}
-              handleChange={this.handleInputChange}
-            />
-            <FormInput
-            name={"productname"}
-            value={this.state.product_id}
-            placeholder={"Product Name"}
-            handleChange={this.handleInputChange}
-            />
-            <FormInput
-            name={"quantity"}
-            value={this.state.quantity}
-            placeholder={"Quantity"}
-            handleChange={this.handleInputChange}
-            />
-            <FormInput
-            name={"exprdate"}
-            value={this.state.exprdate}
-            placeholder={"Expiry Date: YYYY-MM-DD"}
-            handleChange={this.handleInputChange}
-            />
-            <SubmitButton
-              type="submit"
-              value="Submit"
-              onClick={this.handleSubmit}
-            >
-              Submit Transaction
-            </SubmitButton>
-          </FormBody>
-        </Wrapper>
-      );
-    }
-}
+  }
 
-const RadioInputWrapper = styled.input`
-height: 20px;
-border-radius: 4px;
-width: 100%;
-margin-bottom: 10px;
-`;
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+  
+  render() {
+    return (
+      <Wrapper>
+      <StyledTextHeading2>Transactions</StyledTextHeading2>
+        <FormBody>
+          <FormInput
+          name={"productname"}
+          value={this.state.product_id}
+          placeholder={"Product Name"}
+          handleChange={this.handleInputChange}
+          />
+          <FormInput
+          name={"quantity"}
+          value={this.state.quantity}
+          placeholder={"Quantity"}
+          handleChange={this.handleInputChange}
+          />
+          <FormInput
+          name={"exprdate"}
+          value={this.state.exprdate}
+          placeholder={"Expiry Date: YYYY-MM-DD"}
+          handleChange={this.handleInputChange}
+          />
+          <SubmitButton
+            type="submit"
+            value="Submit"
+            onClick={this.handleSaleSubmit}
+          >
+            Sale
+          </SubmitButton>
+          <SubmitButton
+            type="submit"
+            value="Submit"
+            onClick={this.handleRefundSubmit}
+          >
+            Refund
+          </SubmitButton>
+        </FormBody>
+      </Wrapper>
+    );
+  }
+}
 
 const Wrapper = styled.div`
 display: flex;
@@ -181,9 +180,9 @@ const SubmitButton = styled.div`
     background-color: #ffffff;
   }
   font-size: 40px;
-
+  margin: 10px;
   padding-right: 20px;
   padding-left: 20px;
 `;
 
-export {TransactionForm}
+export {TransactionForm};
