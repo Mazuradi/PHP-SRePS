@@ -11,13 +11,13 @@ router.get('/', (req, res, next) => {
 });
 
 //Calling POST protocol
-router.post('/generatecsvraw', (req, res, next) => {
+router.get('/generatecsvraw', (req, res, next) => {
 	//Generates CSV File of raw data.
 	csvraw.generateRawCSV();
 	res.end('Successful Generation of Raw CSV');
 });
 
-router.post('/generatecsvsales', (req, res, next) => {
+router.get('/generatecsvsales', (req, res, next) => {
 	csvsales.generateCSV();
 	res.end('Successful Generation of Sales CSV');
 });
