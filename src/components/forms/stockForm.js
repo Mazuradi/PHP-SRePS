@@ -38,6 +38,7 @@ class StockForm extends React.Component {
     }
 
     handleSubmit(event) {
+        console.log(this.state);
         const state = this.state;
         if (!state.productname)
             alert('Please enter a Product Name');
@@ -54,11 +55,7 @@ class StockForm extends React.Component {
                 'Accept': 'application/json',
                 'Content-Type':'application/json'
             },
-            body: JSON.stringify({
-                productname: this.state.productname,
-                quantity: this.state.quantity,
-                exprdate: this.state.exprdate
-            }),
+            body: JSON.stringify(this.state)
             }).then((result) => result.json());
         }
     }

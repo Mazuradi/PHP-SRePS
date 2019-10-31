@@ -10,7 +10,6 @@ const Header = () => (
     <HeaderButton buttonText={"Stock"} linkURL={"/Stock"} />
     <HeaderButton buttonText={"Transactions"} linkURL={"/Transactions"} />
     <HeaderButton buttonText={"Reports"} linkURL={"/Reports"} />
-    <HeaderButton buttonText={"Sign Out"} onClick={localStorage.setItem('user', null)} />
   </Wrapper>
 );
 

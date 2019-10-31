@@ -17,7 +17,7 @@ async function addStock(product_name, quantity, exprdate) {
 	//Function to add in objectProduct to find id of the product
 	console.log(product_name);
 	var pr_id = await Product.getProductId(product_name);
-	//console.log(pr_id);
+	console.log(pr_id);
 	let newStock = new Stock.Stock(pr_id, quantity, exprdate);
 	newStock.addStock();
 }
