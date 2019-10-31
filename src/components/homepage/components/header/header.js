@@ -25,6 +25,9 @@ const HeaderButton = styled(ButtonUnStyled)`
   margin-left: 32px;
   background-color: rgb(85, 26, 139);
   color: white;
+    &:hover {
+    color: rgb(85,26,139); 
+  }
 `;
 
 const HeaderTitle = styled(StyledTextHeading1)`

@@ -9,10 +9,4 @@ const Homepage = () => (
   </PageWrapper>
 );
 
-const Wrapper = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-`;
-
 export { Homepage };
